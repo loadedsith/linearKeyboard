@@ -20,7 +20,9 @@ import UIKit
     case CAPS
     case SHIFT
   }
+  
   var keys: Array<Array<ButtonKey>> = [];
+  var keyLayer: PlanckView.KeyLayer = PlanckView.KeyLayer.NORMAL;
 
   var _keysFlat: Array<ButtonKey> = [];
 
@@ -59,6 +61,11 @@ import UIKit
     super.layoutSubviews();
   }
 
+  func setKeyLayer(keyLayer: PlanckView.KeyLayer) -> () {
+    self.keyLayer = keyLayer
+    planckView.setKeyLayer(keyLayer)
+  }
+  
   private func arrangeKeys() {
     for (rowIndex, row) in keys.enumerated() {
       for (keyIndex, key) in row.enumerated() {

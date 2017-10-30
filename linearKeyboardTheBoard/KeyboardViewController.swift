@@ -10,7 +10,6 @@ import UIKit
 
 class KeyboardViewController: UIInputViewController {
   var planckView: PlanckView!
-  var layer: PlanckView.KeyLayer = PlanckView.KeyLayer.NORMAL;
 
   @IBOutlet var nextKeyboardButton: UIButton!
 
@@ -20,15 +19,15 @@ class KeyboardViewController: UIInputViewController {
     key.action(view: self, key: key, proxy: proxy)
   }
 
-  func setLayer(layer: PlanckView.KeyLayer) -> () {
-    self.layer = layer
+  func setLayer(keyLayer: PlanckView.KeyLayer) -> () {
+    planckView.setKeyLayer(keyLayer: keyLayer)
   }
 
   func loadInterface() {
     let planckNib = UINib(nibName: "Planck", bundle: nil)
 
     planckView = planckNib.instantiate(withOwner:self, options: nil)[0] as! PlanckView
-
+    
     for (_, row) in planckView.keys.enumerated() {
       for (_, key) in row.enumerated() {
         key.button.addTarget(self, action: #selector(didTapInsert), for: .touchUpInside)
