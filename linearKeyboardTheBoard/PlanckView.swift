@@ -18,11 +18,13 @@ import UIKit
     case ADJUST
     case EMOJI
     case CAPS
-    case SHIFT
   }
   
+  var shift: Bool = false;
+  var lastShift: Bool = false;
   var keys: Array<Array<ButtonKey>> = [];
   var keyLayer: PlanckView.KeyLayer = PlanckView.KeyLayer.NORMAL;
+  var lastKeyLayer: PlanckView.KeyLayer = PlanckView.KeyLayer.NORMAL;
 
   var _keysFlat: Array<ButtonKey> = [];
 
@@ -35,38 +37,44 @@ import UIKit
 
   override init(frame: CGRect) {
     super.init(frame: frame);
-    commonInit();
+    render()
   }
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder);
-    commonInit();
+    render()
   }
 
   override func awakeFromNib() {
     super.awakeFromNib()
-    commonInit()
+    render()
   }
 
   override func prepareForInterfaceBuilder() {
     super.prepareForInterfaceBuilder()
-    commonInit()
+    render();
   }
 
   override func layoutSubviews() {
     self.frame.size.width = UIScreen.main.bounds.width
     self.frame.size.height = (superview?.bounds.height)!
 
-    arrangeKeys()
+    render()
     super.layoutSubviews();
   }
-
+  
   func setKeyLayer(keyLayer: PlanckView.KeyLayer) -> () {
     self.keyLayer = keyLayer
-    planckView.setKeyLayer(keyLayer)
+    render()
   }
   
-  private func arrangeKeys() {
+  func setShift() -> () {
+    self.shift = !self.shift
+    render()
+  }
+  
+  private func render() {
+    createKeys();
     for (rowIndex, row) in keys.enumerated() {
       for (keyIndex, key) in row.enumerated() {
         let button = key.button;
@@ -74,10 +82,13 @@ import UIKit
         let buttonHeight = Float(frame.height) / Float(buttons.count);
         let buttonOffsetX = buttonWidth * Float(keyIndex);
         let buttonOffsetY = buttonHeight * Float(rowIndex);
-
+        
+        key.setShift(shift: self.shift)
+        
         button.frame = CGRect(x: Int(buttonOffsetX), y: Int(buttonOffsetY), width: Int(buttonWidth), height: Int(buttonHeight))
       }
     }
+    self.lastKeyLayer = self.keyLayer
   }
 
   func findKeyByButtonTag(id:Int) -> ButtonKey {
@@ -90,7 +101,7 @@ import UIKit
     return ButtonKey.init(label: "error");
   }
 
-  private func commonInit() {
+  private func createKeys() {
     frame=bounds
     backgroundColor = UIColor.lightGray
     var count: Int = 0
@@ -109,7 +120,5 @@ import UIKit
         }
       }
     }
-
-    arrangeKeys();
   }
 }

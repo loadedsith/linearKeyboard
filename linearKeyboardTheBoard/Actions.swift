@@ -22,15 +22,15 @@ func TAB(view: KeyboardViewController, key: ButtonKey, proxy: UITextDocumentProx
 }
 
 func CAPS(view: KeyboardViewController, key: ButtonKey, proxy: UITextDocumentProxy) {
-  view.setLayer(layer: PlanckView.KeyLayer.CAPS)
+  view.setLayer(keyLayer: PlanckView.KeyLayer.CAPS)
 }
 
 func RAISE(view: KeyboardViewController, key: ButtonKey, proxy: UITextDocumentProxy) {
-  view.setLayer(layer: PlanckView.KeyLayer.RAISE)
+  view.setLayer(keyLayer: PlanckView.KeyLayer.RAISE)
 }
 
 func LOWER(view: KeyboardViewController, key: ButtonKey, proxy: UITextDocumentProxy) {
-  view.setLayer(layer: PlanckView.KeyLayer.LOWER)
+  view.setLayer(keyLayer: PlanckView.KeyLayer.LOWER)
 }
 
 func LEFT(view: KeyboardViewController, key: ButtonKey, proxy: UITextDocumentProxy) {
@@ -50,6 +50,6 @@ func RIGHT(view: KeyboardViewController, key: ButtonKey, proxy: UITextDocumentPr
 }
 
 func SHIFT(view: KeyboardViewController, key: ButtonKey, proxy: UITextDocumentProxy) {
-  view.setLayer(layer: PlanckView.KeyLayer.SHIFT)
+  view.setShift()
 }
 

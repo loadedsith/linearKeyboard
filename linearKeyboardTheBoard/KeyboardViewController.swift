@@ -18,9 +18,13 @@ class KeyboardViewController: UIInputViewController {
     let key = planckView.findKeyByButtonTag(id: sender.tag)
     key.action(view: self, key: key, proxy: proxy)
   }
-
+  
   func setLayer(keyLayer: PlanckView.KeyLayer) -> () {
     planckView.setKeyLayer(keyLayer: keyLayer)
+  }
+
+  func setShift() -> () {
+    planckView.setShift()
   }
 
   func loadInterface() {
@@ -78,12 +82,12 @@ class KeyboardViewController: UIInputViewController {
   override func textDidChange(_ textInput: UITextInput?) {
     // The app has just changed the document's contents, the document context has been updated.
 
-    var textColor: UIColor
-    let proxy = self.textDocumentProxy
-    if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
-      textColor = UIColor.white
-    } else {
-      textColor = UIColor.black
-    }
+//    var textColor: UIColor
+//    let proxy = self.textDocumentProxy
+//    if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
+//      textColor = UIColor.white
+//    } else {
+//      textColor = UIColor.black
+//    }
   }
 }
