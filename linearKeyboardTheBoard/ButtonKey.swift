@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 
 class ButtonKey {
+  func copy() -> ButtonKey {
+    return ButtonKey(label: label, shifted: shifted, action:action)
+  }
+  
   var label: String = "";
   var shifted: String;
   var shift: Bool = false;
@@ -54,7 +58,15 @@ class ButtonKey {
     self.button = UIButton(type: UIButtonType.system)
     self.button.setTitle(NSLocalizedString(label, comment: "Title for '\(label) button'"), for: [])
   }
-
+  
+  init(label:String, shifted:String, action: @escaping (KeyboardViewController, ButtonKey, UITextDocumentProxy) -> ()) {
+    self.label = label
+    self.shifted = shifted
+    self.button = UIButton(type: UIButtonType.system)
+    self.button.setTitle(NSLocalizedString(label, comment: "Title for '\(label) button'"), for: [])
+    self.customAction = action
+  }
+  
   init(label:String, action: @escaping (KeyboardViewController, ButtonKey, UITextDocumentProxy) -> ()) {
     self.label = label
     self.shifted = label.uppercased()

@@ -32,9 +32,11 @@ class KeyboardViewController: UIInputViewController {
 
     planckView = planckNib.instantiate(withOwner:self, options: nil)[0] as! PlanckView
     
-    for (_, row) in planckView.keys.enumerated() {
-      for (_, key) in row.enumerated() {
-        key.button.addTarget(self, action: #selector(didTapInsert), for: .touchUpInside)
+    for (_, layer) in planckView.keys {
+      for (_, row) in layer.enumerated() {
+        for (_, key) in row.enumerated() {
+          key.button.addTarget(self, action: #selector(didTapInsert), for: .touchUpInside)
+        }
       }
     }
 
