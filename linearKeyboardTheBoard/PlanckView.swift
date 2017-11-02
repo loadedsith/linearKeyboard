@@ -135,8 +135,10 @@ import UIKit
           
           if (keyLayer == layerIndex) {
             button.isHidden = false
+            button.isEnabled = true
           } else {
             button.isHidden = true
+            button.isEnabled = false
           }
 
           button.frame = CGRect(x: Int(buttonOffsetX), y: Int(buttonOffsetY), width: Int(buttonWidth), height: Int(buttonHeight))

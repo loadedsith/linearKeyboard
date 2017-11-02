@@ -48,50 +48,35 @@ class ButtonKey {
     }
   }
 
+  static func setupShifted(shifted: String?, label: String?) -> (String) {
+    if (shifted == nil) {
+      return label!.uppercased()
+    } else {
+      return shifted!;
+    }
+  }
+  
   init(empty:Bool) {
-    self.label = "";
-    self.shifted = "";
-    self.width = 0;
+    self.label = ""
+    self.shifted = ""
+    self.width = 0
     self.button = UIButton(type: UIButtonType.system)
   }
   
-  init(label:String) {
-    self.label = label;
-    self.shifted = label.uppercased();
-    self.button = UIButton(type: UIButtonType.system)
-    self.button.setTitle(NSLocalizedString(label, comment: "Title for '\(label) button'"), for: [])
-  }
-  
-  init(label:String, shifted:String) {
+  init(label:String, shifted: String? = nil) {
     self.label = label
-    self.shifted = shifted
+    self.shifted = ButtonKey.setupShifted(shifted: shifted, label: self.label)
     self.button = UIButton(type: UIButtonType.system)
     self.button.setTitle(NSLocalizedString(label, comment: "Title for '\(label) button'"), for: [])
-  }
-  
-  init(label:String, shifted:String, action: @escaping (KeyboardViewController, ButtonKey, UITextDocumentProxy, Bool) -> ()) {
-    self.label = label
-    self.shifted = shifted
-    self.button = UIButton(type: UIButtonType.system)
-    self.button.setTitle(NSLocalizedString(label, comment: "Title for '\(label) button'"), for: [])
-    self.customAction = action
   }
 
-  init(label:String, width: Float, shifted: String, action: @escaping (KeyboardViewController, ButtonKey, UITextDocumentProxy, Bool) -> ()) {
+  init(label:String, width: Float? = 1, shifted: String? = nil, action: @escaping (KeyboardViewController, ButtonKey, UITextDocumentProxy, Bool) -> ()) {
     self.label = label
-    self.shifted = shifted
-    self.width = width
+    self.shifted = ButtonKey.setupShifted(shifted: shifted, label: self.label)
+    self.width = width!
     self.button = UIButton(type: UIButtonType.system)
     self.button.setTitle(NSLocalizedString(label, comment: "Title for '\(label) button'"), for: [])
     self.customAction = action
     self.button.backgroundColor = UIColor.black
-  }
-  
-  init(label:String, action: @escaping (KeyboardViewController, ButtonKey, UITextDocumentProxy, Bool) -> ()) {
-    self.label = label
-    self.shifted = label.uppercased()
-    self.button = UIButton(type: UIButtonType.system)
-    self.button.setTitle(NSLocalizedString(label, comment: "Title for '\(label) button'"), for: [])
-    self.customAction = action
   }
 }
