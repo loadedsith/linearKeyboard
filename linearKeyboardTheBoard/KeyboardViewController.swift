@@ -16,7 +16,7 @@ class KeyboardViewController: UIInputViewController {
   @IBAction func didTapInsert(sender:UIButton) {
     let proxy = textDocumentProxy
     let key = planckView.findKeyByButtonTag(id: sender.tag)
-    key.action(view: self, key: key, proxy: proxy)
+    key.action(view: self, key: key, proxy: proxy, shifted_: planckView.shift)
   }
   
   func setLayer(keyLayer: PlanckView.KeyLayer) -> () {
