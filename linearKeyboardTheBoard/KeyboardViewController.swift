@@ -8,7 +8,7 @@
 
 import UIKit
 
-class KeyboardViewController: UIInputViewController {
+class KeyboardViewController: UIInputViewController, UITextFieldDelegate {
   var planckView: PlanckView!
 
   @IBOutlet var nextKeyboardButton: UIButton!
@@ -19,12 +19,12 @@ class KeyboardViewController: UIInputViewController {
     key.action(view: self, key: key, proxy: proxy, shifted_: planckView.shift)
   }
   
-  func setLayer(keyLayer: PlanckView.KeyLayer) -> () {
+  func setLayer(keyLayer: PlanckView.KeyLayer) {
     planckView.setKeyLayer(keyLayer: keyLayer)
   }
 
-  func setShift() -> () {
-    planckView.setShift()
+  func setShift(enabled:Bool? = true) {
+    planckView.setShift(enabled: enabled!)
   }
 
   func loadInterface() {
@@ -45,30 +45,9 @@ class KeyboardViewController: UIInputViewController {
     view.backgroundColor = planckView.backgroundColor
   }
 
-  override func updateViewConstraints() {
-    super.updateViewConstraints()
-
-    // Add custom view sizing constraints here
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
-
-        // Perform custom UI setup here
-//        self.nextKeyboardButton = UIButton(type: .system)
-//
-//        self.nextKeyboardButton.setTitle(NSLocalizedString("Next Keyboard", comment: "Title for 'Next Keyboard' button"), for: [])
-//        self.nextKeyboardButton.sizeToFit()
-//        self.nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
-//
-//        self.nextKeyboardButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
-//
-//        self.view.addSubview(self.nextKeyboardButton)
-//
-//        self.nextKeyboardButton.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-//        self.nextKeyboardButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-//        self.nextKeyboardButton.setTitleColor(textColor, for: [])
-
+    
     loadInterface()
   }
 
@@ -79,17 +58,12 @@ class KeyboardViewController: UIInputViewController {
 
   override func textWillChange(_ textInput: UITextInput?) {
     // The app is about to change the document's contents. Perform any preparation here.
+    planckView.textWillChange(keyboardAppearance: self.textDocumentProxy.keyboardAppearance!)
   }
-
+  
   override func textDidChange(_ textInput: UITextInput?) {
     // The app has just changed the document's contents, the document context has been updated.
-
-//    var textColor: UIColor
-//    let proxy = self.textDocumentProxy
-//    if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
-//      textColor = UIColor.white
-//    } else {
-//      textColor = UIColor.black
-//    }
+    
+    planckView.textDidChange(keyboardAppearance: self.textDocumentProxy.keyboardAppearance!)
   }
 }

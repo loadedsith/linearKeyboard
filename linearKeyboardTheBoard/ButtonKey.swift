@@ -3,14 +3,13 @@
 //  linearKeyboardTheBoard
 //
 //  Created by Graham Heath on 10/28/17.
-//  Copyright © 2017 Graham Heath. All rights reserved.
+//  Copyleft © 2017 Graham Heath. No rights reserved.
 //
 
 import Foundation
 import UIKit
 
 class ButtonKey {
-
   var empty: Bool = false;
   var width: Float = 1;
   var label: String = "";
@@ -18,7 +17,7 @@ class ButtonKey {
   var shift: Bool = false;
   var lastShift: Bool = false;
   var customAction: ((KeyboardViewController, ButtonKey, UITextDocumentProxy, Bool) -> ())?;
-  var button: UIButton;
+  @IBInspectable var button: UIButton;
   
   func copy() -> ButtonKey {
     return ButtonKey(label: label, width: width, shifted: shifted, action: action)
@@ -30,6 +29,7 @@ class ButtonKey {
     } else {
       if (shifted_ == true) {
         proxy.insertText(self.shifted)
+        view.setShift(enabled: false)
       } else {
         proxy.insertText(self.label)
       }
@@ -63,20 +63,20 @@ class ButtonKey {
     self.button = UIButton(type: UIButtonType.system)
   }
   
-  init(label:String, shifted: String? = nil) {
+  init(label:String, width: Float? = 1, shifted: String? = nil, buttonType: UIButtonType? = UIButtonType.system) {
     self.label = label
+    self.width = width!
     self.shifted = ButtonKey.setupShifted(shifted: shifted, label: self.label)
-    self.button = UIButton(type: UIButtonType.system)
+    self.button = UIButton(type: buttonType!)
     self.button.setTitle(NSLocalizedString(label, comment: "Title for '\(label) button'"), for: [])
   }
 
-  init(label:String, width: Float? = 1, shifted: String? = nil, action: @escaping (KeyboardViewController, ButtonKey, UITextDocumentProxy, Bool) -> ()) {
+  init(label:String, width: Float? = 1, shifted: String? = nil, buttonType: UIButtonType? = UIButtonType.system, action: @escaping (KeyboardViewController, ButtonKey, UITextDocumentProxy, Bool) -> ()) {
     self.label = label
-    self.shifted = ButtonKey.setupShifted(shifted: shifted, label: self.label)
     self.width = width!
-    self.button = UIButton(type: UIButtonType.system)
+    self.shifted = ButtonKey.setupShifted(shifted: shifted, label: self.label)
+    self.button = UIButton(type: buttonType!)
     self.button.setTitle(NSLocalizedString(label, comment: "Title for '\(label) button'"), for: [])
     self.customAction = action
-    self.button.backgroundColor = UIColor.black
   }
 }

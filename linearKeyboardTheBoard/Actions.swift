@@ -3,7 +3,7 @@
 //  linearKeyboardTheBoard
 //
 //  Created by Graham Heath on 10/29/17.
-//  Copyright © 2017 Graham Heath. All rights reserved.
+//  Copyleft © 2017 Graham Heath. No rights reserved.
 //
 
 import Foundation
@@ -11,6 +11,14 @@ import UIKit
 
 func BACKSPACE(view: KeyboardViewController, key: ButtonKey, proxy: UITextDocumentProxy, shifted_: Bool) {
   proxy.deleteBackward()
+}
+
+func ENTER(view: KeyboardViewController, key: ButtonKey, proxy: UITextDocumentProxy, shifted_: Bool) {
+  proxy.insertText("\n")
+}
+
+func EXIT(view: KeyboardViewController, key: ButtonKey, proxy: UITextDocumentProxy, shifted_: Bool) {
+  view.dismissKeyboard()
 }
 
 func DELETE(view: KeyboardViewController, key: ButtonKey, proxy: UITextDocumentProxy, shifted_: Bool) {
